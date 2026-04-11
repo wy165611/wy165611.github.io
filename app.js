@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     themeToggleBtns.forEach(btn => {
-        if(btn) {
+        if (btn) {
             btn.addEventListener('click', () => {
                 applyTheme(!htmlElement.classList.contains('dark'));
             });
@@ -67,12 +67,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // 导航背景变色/模糊 (非顶部区域加深玻璃感)
             if (currentScrollY > 50) {
-                navbar.classList.replace('border-transparent', 'border-slate-200');
-                navbar.classList.add('dark:border-neutral-800');
-                navbar.style.backgroundColor = htmlElement.classList.contains('dark') ? 'rgba(10, 10, 10, 0.85)' : 'rgba(250, 250, 250, 0.85)';
+                navbar.classList.replace('border-transparent', 'border-[#F2E3D5]');
+                navbar.classList.add('dark:border-[#4A3326]');
+                navbar.style.backgroundColor = htmlElement.classList.contains('dark') ? 'rgba(44, 30, 22, 0.85)' : 'rgba(255, 249, 242, 0.85)';
             } else {
-                navbar.classList.replace('border-slate-200', 'border-transparent');
-                navbar.classList.remove('dark:border-neutral-800');
+                navbar.classList.replace('border-[#F2E3D5]', 'border-transparent');
+                navbar.classList.remove('dark:border-[#4A3326]');
                 navbar.style.backgroundColor = 'transparent';
             }
 
@@ -92,20 +92,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const observerOptions = {
         root: null,
         rootMargin: '0px',
-        threshold: 0.15 
+        threshold: 0.15
     };
 
     const animateObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('show');
-                
+
                 const skillBar = entry.target.querySelector('.skill-bar-fill');
                 if (skillBar) {
                     const widthLimit = skillBar.getAttribute('data-width');
                     skillBar.style.width = widthLimit;
                 }
-                
+
                 observer.unobserve(entry.target);
             }
         });

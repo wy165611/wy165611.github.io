@@ -3,11 +3,13 @@
 html {
     scroll-behavior: smooth;
     font-family: 'Inter', sans-serif;
-    background-color: #FAFAFA;
+    background-color: #FFF9F2;
+    /* 暖柔沙色 */
 }
 
 html.dark {
-    background-color: #0A0A0A;
+    background-color: #2C1E16;
+    /* 深醇摩卡棕 */
 }
 
 body {
@@ -15,18 +17,24 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* 优雅极简的滚动条 */
+/* 温暖调滚动条 */
 ::-webkit-scrollbar {
-    width: 4px;
+    width: 6px;
 }
+
 ::-webkit-scrollbar-track {
     background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
-    background: #E5E5E5;
+    background: #F2E3D5;
+    /* 暖光边框色 */
+    border-radius: 4px;
 }
+
 .dark ::-webkit-scrollbar-thumb {
-    background: #262626;
+    background: #4A3326;
+    /* 暗模式暖光色 */
 }
 
 /* 基础平滑出现缓动动画 */
@@ -35,29 +43,44 @@ body {
     transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
     will-change: opacity, transform;
 }
+
 .fade-up {
     transform: translateY(30px);
 }
+
 .fade-in {
     transform: scale(0.98);
 }
+
 .animate-on-scroll.show {
     opacity: 1;
     transform: translateY(0) scale(1);
 }
 
 /* 延迟序列 */
-.delay-100 { transition-delay: 100ms; }
-.delay-200 { transition-delay: 200ms; }
-.delay-300 { transition-delay: 300ms; }
-.delay-400 { transition-delay: 400ms; }
+.delay-100 {
+    transition-delay: 100ms;
+}
 
-/* 顶导极简线 */
+.delay-200 {
+    transition-delay: 200ms;
+}
+
+.delay-300 {
+    transition-delay: 300ms;
+}
+
+.delay-400 {
+    transition-delay: 400ms;
+}
+
+/* 顶导空气感玻璃 */
 .glass-nav {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     transition: border-color 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.5s ease;
 }
+
 .nav-hidden {
     transform: translateY(-100%);
 }
@@ -73,6 +96,7 @@ body {
     background-color: currentColor;
     transition: width 0.4s cubic-bezier(0.65, 0, 0.35, 1);
 }
+
 .hover-line-expand:hover::after {
     width: 100%;
 }
@@ -81,12 +105,12 @@ body {
 .img-zoom-hover {
     transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 .group:hover .img-zoom-hover {
     transform: scale(1.03);
 }
 
-/* 技能线缓慢生长 */
-.skill-bar-fill {
-    width: 0; 
-    transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+/* 通用慢缩放进场图层 */
+.blob-shape {
+    transition: transform 2s ease-out;
 }
