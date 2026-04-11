@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>极简天气应用 | 项目详情</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>极简天气应用 | 极简</title>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -14,8 +14,13 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#475569',
-                        darkBg: '#0b1120',
+                        swissWhite: '#FAFAFA',
+                        swissOffWhite: '#F0F0F0',
+                        swissBlack: '#0A0A0A',
+                        swissOffBlack: '#171717',
+                        swissGray: '#A3A3A3',
+                        swissLightGray: '#E5E5E5',
+                        swissDarkEdge: '#262626'
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -26,74 +31,72 @@
     </script>
 </head>
 
-<body class="bg-slate-50 text-slate-800 dark:bg-darkBg dark:text-slate-200 transition-colors duration-500 font-sans overflow-x-hidden">
+<body class="bg-swissWhite text-swissBlack dark:bg-swissBlack dark:text-swissWhite transition-colors duration-700 font-sans font-light overflow-x-hidden selection:bg-swissGray selection:text-white">
 
-    <div id="cursor-glow"></div>
-
-    <nav class="fixed w-full top-0 z-50 glass-nav border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-[#0b1120]/80 transition-colors duration-300">
-        <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
-            <div class="flex justify-between items-center h-20">
-                <a href="index.html" class="flex items-center space-x-2 text-sm font-medium tracking-widest text-slate-600 dark:text-slate-300 hover:text-black dark:hover:text-white transition-colors group">
-                    <i class="fas fa-arrow-left transform group-hover:-translate-x-1 transition-transform"></i>
-                    <span>BACK TO PORTFOLIO</span>
+    <nav class="fixed w-full top-0 z-50 glass-nav border-b border-transparent">
+        <div class="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
+            <div class="flex justify-between items-center h-24">
+                <a href="index.html" class="flex items-center space-x-4 text-sm font-medium tracking-[0.2em] uppercase text-swissBlack dark:text-swissWhite group hover:text-swissGray transition-colors">
+                    <i class="ph-light ph-arrow-left text-xl transform group-hover:-translate-x-2 transition-transform"></i>
+                    <span>Portfolio</span>
                 </a>
                 
-                <button id="theme-toggle" class="p-2 rounded-full text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white transition-colors focus:outline-none">
-                    <i class="fas fa-moon dark:hidden"></i>
-                    <i class="fas fa-sun hidden dark:block"></i>
+                <button id="theme-toggle" class="hover:text-swissBlack dark:hover:text-white transition-colors focus:outline-none flex flex-col justify-center text-swissGray">
+                    <i class="ph-light ph-moon text-2xl dark:hidden"></i>
+                    <i class="ph-light ph-sun text-2xl hidden dark:block"></i>
                 </button>
             </div>
         </div>
     </nav>
 
-    <header class="pt-40 pb-20 px-6 sm:px-8 lg:px-12 max-w-6xl mx-auto">
-        <div class="animate-on-scroll fade-up">
-            <h1 class="text-4xl md:text-6xl font-black mb-6 tracking-tight text-slate-900 dark:text-white">极致气象体验</h1>
-            <p class="text-xl md:text-2xl font-light text-slate-600 dark:text-slate-400 mb-10 max-w-3xl">遵循 Apple HIG 规范，由 React 强力驱动的一抹纯净天空。</p>
+    <header class="pt-48 pb-24 px-6 sm:px-10 lg:px-16 max-w-7xl mx-auto">
+        <div class="animate-on-scroll fade-up max-w-4xl">
+            <h1 class="text-6xl md:text-8xl font-medium mb-12 tracking-tight text-swissBlack dark:text-swissWhite leading-[1.1]">极简气象<br />体验.</h1>
+            <p class="text-2xl font-light text-swissGray mb-16 leading-relaxed max-w-3xl">遵循 Apple HIG 规范，强力剥离一切无效数据，留住最纯粹的数字天空。</p>
             
-            <div class="flex flex-wrap gap-3 mb-16">
-                <span class="px-4 py-2 bg-slate-200 dark:bg-slate-800 rounded-full text-xs font-semibold tracking-wider uppercase text-slate-700 dark:text-slate-300">React</span>
-                <span class="px-4 py-2 bg-slate-200 dark:bg-slate-800 rounded-full text-xs font-semibold tracking-wider uppercase text-slate-700 dark:text-slate-300">Tailwind CSS</span>
-                <span class="px-4 py-2 bg-slate-200 dark:bg-slate-800 rounded-full text-xs font-semibold tracking-wider uppercase text-slate-700 dark:text-slate-300">OpenWeather API</span>
+            <div class="flex flex-wrap gap-8 text-xs font-semibold tracking-widest uppercase text-swissBlack dark:text-swissWhite border-t border-swissLightGray dark:border-swissDarkEdge py-8">
+                <span>React</span>
+                <span>Tailwind CSS</span>
+                <span>Framer Motion</span>
+                <span>OpenWeather</span>
             </div>
         </div>
 
-        <div class="w-full h-64 md:h-[500px] bg-slate-200 dark:bg-slate-800 rounded-3xl overflow-hidden animate-on-scroll fade-in delay-200 shadow-2xl relative flex items-center justify-center border border-slate-300 dark:border-slate-700">
-            <div class="absolute inset-0 bg-gradient-to-tr from-sky-300/20 to-blue-500/10"></div>
-            <i class="fas fa-cloud-sun-rain text-8xl text-slate-300 dark:text-slate-600"></i>
+        <div class="w-full aspect-[21/9] bg-swissOffWhite dark:bg-swissOffBlack rounded-lg mt-12 overflow-hidden animate-on-scroll fade-up delay-200 flex items-center justify-center border border-swissLightGray dark:border-swissDarkEdge">
+            <i class="ph-light ph-cloud-moon text-[10rem] text-swissGray/30"></i>
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 py-20">
-        <div class="space-y-24">
-            <section class="animate-on-scroll fade-up">
-                <h2 class="text-xs font-bold tracking-[0.2em] text-slate-400 uppercase mb-4">01. The Challenge</h2>
-                <h3 class="text-3xl font-bold mb-6 text-slate-800 dark:text-slate-100">简化复杂数据</h3>
-                <div class="text-slate-600 dark:text-slate-400 space-y-4 font-light leading-loose text-lg">
-                    <p>市面上的天气应用大多堆砌了繁杂的气象数据，用户难以第一时间捕获核心信息。本项目的使命是“做减法”：通过极简的空间留白与直观的图形状态，摒弃一切不必要的信息噪音。</p>
+    <main class="max-w-5xl mx-auto px-6 sm:px-10 lg:px-16 py-32 md:py-48">
+        <div class="space-y-40">
+            <section class="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 animate-on-scroll fade-up">
+                <div class="md:col-span-4">
+                    <h2 class="text-xs font-semibold tracking-[0.3em] uppercase text-swissGray sticky top-32">01 / Challenge</h2>
+                </div>
+                <div class="md:col-span-8 space-y-6 text-xl text-swissBlack dark:text-swissWhite font-light leading-relaxed">
+                    <p>市面上的天气应用大多堆砌了繁杂的气象数据，充满了多余的阴影和渐变，使用者难以在 1 秒内捕获所需的环境变动。</p>
+                    <p class="text-swissGray">在这一项目中，核心哲学是“少即是多”。去除干扰项，用排版和极少量的线条承接空间。</p>
                 </div>
             </section>
             
-            <section class="animate-on-scroll fade-up">
-                <h2 class="text-xs font-bold tracking-[0.2em] text-slate-400 uppercase mb-4">02. Solutions</h2>
-                <h3 class="text-3xl font-bold mb-6 text-slate-800 dark:text-slate-100">视觉与交互设计</h3>
-                <div class="text-slate-600 dark:text-slate-400 space-y-4 font-light leading-loose text-lg">
-                    <p>在界面渲染上，借助 Tailwind CSS 封装了多种依赖真实时间戳与天气代码的 UI 渐变背景（清晨、黄昏、雨夜等）。</p>
-                    <p>通过 Lottie 集成了微动效（如浮云飘动、雨滴下落），极大地提升了情感化设计维度。由于使用纯函数式组件封装状态逻辑，代码量减少了近一倍，启动速度极快。</p>
+            <section class="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 animate-on-scroll fade-up">
+                <div class="md:col-span-4">
+                    <h2 class="text-xs font-semibold tracking-[0.3em] uppercase text-swissGray sticky top-32">02 / Solutions</h2>
+                </div>
+                <div class="md:col-span-8 space-y-6 text-xl text-swissBlack dark:text-swissWhite font-light leading-relaxed">
+                    <p>借助纯净的 Tailwind 调色板与系统层接壤的无缝渲染，将天气状态简化为清晰的高比度色块和图标映射。一切过度设计的声音都被静音。</p>
+                    <p>组件以纯函数构造，去除深层状态机，依赖细微的 Framer Motion 线条与单色动效来表达风、雨、云的情感化反馈。无冗余加载，启动即时。</p>
                 </div>
             </section>
         </div>
     </main>
 
-    <footer class="bg-slate-900 border-t border-slate-800 pt-20 pb-12 mt-20">
-        <div class="max-w-4xl mx-auto px-6 text-center animate-on-scroll fade-up">
-            <h4 class="text-xs font-bold tracking-[0.2em] text-slate-500 uppercase mb-6">Next Project</h4>
-            <a href="project-uilib.html" class="inline-block group text-3xl md:text-5xl font-bold text-white hover:text-blue-400 transition-colors duration-300">
-                UI组件库构建 <i class="fas fa-arrow-right ml-4 transform group-hover:translate-x-4 transition-transform duration-300"></i>
+    <footer class="py-32 md:py-48 border-t border-swissLightGray dark:border-swissDarkEdge">
+        <div class="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 animate-on-scroll fade-up">
+            <h4 class="text-xs font-semibold tracking-[0.3em] uppercase text-swissGray mb-12">Next Project</h4>
+            <a href="project-uilib.html" class="inline-flex items-center text-4xl md:text-7xl font-medium text-swissBlack dark:text-swissWhite hover:text-swissGray transition-colors group">
+                组件库构建 <i class="ph-light ph-arrow-right ml-8 transform md:group-hover:translate-x-8 transition-transform duration-500"></i>
             </a>
-            <div class="border-t border-slate-800 pt-8 mt-24 text-xs tracking-widest text-slate-500 font-medium">
-                <p>&copy; 2026 DevFolio.</p>
-            </div>
         </div>
     </footer>
 

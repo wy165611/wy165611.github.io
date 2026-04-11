@@ -1,8 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&display=swap');
 
 html {
     scroll-behavior: smooth;
     font-family: 'Inter', sans-serif;
+    background-color: #FAFAFA;
+}
+
+html.dark {
+    background-color: #0A0A0A;
 }
 
 body {
@@ -10,136 +15,78 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* 隐藏部分浏览器的默认滚动条以匹配高端设计 */
+/* 优雅极简的滚动条 */
 ::-webkit-scrollbar {
-    width: 6px;
+    width: 4px;
 }
-
 ::-webkit-scrollbar-track {
     background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 10px;
+    background: #E5E5E5;
 }
-
 .dark ::-webkit-scrollbar-thumb {
-    background: #334155;
+    background: #262626;
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
-}
-
-/* ================= 鼠标跟随光晕特效 ================= */
-#cursor-glow {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(147, 197, 253, 0.15) 0%, transparent 60%);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    /* 防止遮挡点击 */
-    z-index: 9999;
-    will-change: transform, left, top;
-}
-
-.dark #cursor-glow {
-    background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 60%);
-}
-
-/* ================= 滚动进场动画 ================= */
+/* 基础平滑出现缓动动画 */
 .animate-on-scroll {
     opacity: 0;
-    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
     will-change: opacity, transform;
 }
-
 .fade-up {
-    transform: translateY(40px);
+    transform: translateY(30px);
 }
-
 .fade-in {
-    transform: scale(0.95);
+    transform: scale(0.98);
 }
-
 .animate-on-scroll.show {
     opacity: 1;
     transform: translateY(0) scale(1);
 }
 
-/* 延迟类 */
-.delay-100 {
-    transition-delay: 100ms;
-}
+/* 延迟序列 */
+.delay-100 { transition-delay: 100ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-300 { transition-delay: 300ms; }
+.delay-400 { transition-delay: 400ms; }
 
-.delay-200 {
-    transition-delay: 200ms;
-}
-
-.delay-300 {
-    transition-delay: 300ms;
-}
-
-.delay-400 {
-    transition-delay: 400ms;
-}
-
-/* ================= 技能条动画 ================= */
-.skill-bar-fill {
-    width: 0;
-    /* 默认宽度0，由JS触发 */
-    transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* ================= 3D 翻转卡片 ================= */
-.perspective-1000 {
-    perspective: 1000px;
-}
-
-.transform-style-3d {
-    transform-style: preserve-3d;
-}
-
-.backface-hidden {
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-}
-
-.rotate-y-180 {
-    transform: rotateY(180deg);
-}
-
-.group:hover .group-hover\:rotate-y-180 {
-    transform: rotateY(180deg);
-}
-
-/* 悬停上浮与阴影加深 (Tailwind 自带 shadow 处理，但补充浮动过渡) */
-.hover-float {
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
-}
-
-.hover-float:hover {
-    transform: translateY(-8px);
-}
-
-/* ================= 其他细节 ================= */
+/* 顶导极简线 */
 .glass-nav {
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    transition: background-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: border-color 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.5s ease;
 }
-
 .nav-hidden {
     transform: translateY(-100%);
 }
 
-.text-gradient {
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+/* 悬停微线展引交互 */
+.hover-line-expand::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: currentColor;
+    transition: width 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.hover-line-expand:hover::after {
+    width: 100%;
+}
+
+/* 图像缩放优雅度 */
+.img-zoom-hover {
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.group:hover .img-zoom-hover {
+    transform: scale(1.03);
+}
+
+/* 技能线缓慢生长 */
+.skill-bar-fill {
+    width: 0; 
+    transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
