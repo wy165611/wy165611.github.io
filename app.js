@@ -3,30 +3,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const btn = document.getElementById('mobile-menu-btn');
     const menu = document.getElementById('mobile-menu');
 
-    btn.addEventListener('click', () => {
-        if (menu.classList.contains('hidden')) {
-            menu.classList.remove('hidden');
-            menu.classList.add('flex');
-            // 简单淡入动画延迟
-            setTimeout(() => menu.style.opacity = '1', 10);
-        } else {
-            menu.style.opacity = '0';
-            setTimeout(() => {
-                menu.classList.remove('flex');
-                menu.classList.add('hidden');
-            }, 300); // 等待过渡
-        }
-    });
+    if (btn && menu) {
+        btn.addEventListener('click', () => {
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                menu.classList.add('flex');
+                // 简单淡入动画延迟
+                setTimeout(() => menu.style.opacity = '1', 10);
+            } else {
+                menu.style.opacity = '0';
+                setTimeout(() => {
+                    menu.classList.remove('flex');
+                    menu.classList.add('hidden');
+                }, 300); // 等待过渡
+            }
+        });
 
-    menu.addEventListener('click', (e) => {
-        if (e.target.tagName === 'A') {
-            menu.style.opacity = '0';
-            setTimeout(() => {
-                menu.classList.remove('flex');
-                menu.classList.add('hidden');
-            }, 300);
-        }
-    });
+        menu.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                menu.style.opacity = '0';
+                setTimeout(() => {
+                    menu.classList.remove('flex');
+                    menu.classList.add('hidden');
+                }, 300);
+            }
+        });
+    }
 
     // 2. 明暗主题切换逻辑
     const themeToggleBtns = [document.getElementById('theme-toggle'), document.getElementById('theme-toggle-mobile')];
@@ -60,41 +62,45 @@ document.addEventListener('DOMContentLoaded', () => {
     const navbar = document.getElementById('navbar');
     let lastScrollY = window.scrollY;
 
-    window.addEventListener('scroll', () => {
-        const currentScrollY = window.scrollY;
+    if (navbar) {
+        window.addEventListener('scroll', () => {
+            const currentScrollY = window.scrollY;
 
-        // 导航背景变色/模糊 (非顶部区域加深玻璃感)
-        if (currentScrollY > 50) {
-            navbar.classList.replace('border-transparent', 'border-slate-200');
-            navbar.classList.add('dark:border-slate-800');
-            navbar.style.backgroundColor = htmlElement.classList.contains('dark') ? 'rgba(11, 17, 32, 0.85)' : 'rgba(255, 255, 255, 0.85)';
-        } else {
-            navbar.classList.replace('border-slate-200', 'border-transparent');
-            navbar.classList.remove('dark:border-slate-800');
-            navbar.style.backgroundColor = 'transparent';
-        }
-
-        // 向上滚动显示，向下滚动隐藏
-        if (currentScrollY > 200) {
-            if (currentScrollY > lastScrollY) {
-                navbar.classList.add('nav-hidden');
+            // 导航背景变色/模糊 (非顶部区域加深玻璃感)
+            if (currentScrollY > 50) {
+                navbar.classList.replace('border-transparent', 'border-slate-200');
+                navbar.classList.add('dark:border-slate-800');
+                navbar.style.backgroundColor = htmlElement.classList.contains('dark') ? 'rgba(11, 17, 32, 0.85)' : 'rgba(255, 255, 255, 0.85)';
             } else {
-                navbar.classList.remove('nav-hidden');
+                navbar.classList.replace('border-slate-200', 'border-transparent');
+                navbar.classList.remove('dark:border-slate-800');
+                navbar.style.backgroundColor = 'transparent';
             }
-        }
-        lastScrollY = currentScrollY;
-    });
+
+            // 向上滚动显示，向下滚动隐藏
+            if (currentScrollY > 200) {
+                if (currentScrollY > lastScrollY) {
+                    navbar.classList.add('nav-hidden');
+                } else {
+                    navbar.classList.remove('nav-hidden');
+                }
+            }
+            lastScrollY = currentScrollY;
+        });
+    }
 
     // 4. 鼠标跟随光晕
     const cursorGlow = document.getElementById('cursor-glow');
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
+    if (cursorGlow) {
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
 
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        cursorGlow.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
-    });
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            cursorGlow.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+        });
+    }
 
     // 5. 首页视差背景效果
     const homeSection = document.getElementById('home');

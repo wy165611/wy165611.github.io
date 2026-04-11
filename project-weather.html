@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>极简天气应用 | 项目详情</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#475569',
+                        darkBg: '#0b1120',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-slate-50 text-slate-800 dark:bg-darkBg dark:text-slate-200 transition-colors duration-500 font-sans overflow-x-hidden">
+
+    <div id="cursor-glow"></div>
+
+    <nav class="fixed w-full top-0 z-50 glass-nav border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-[#0b1120]/80 transition-colors duration-300">
+        <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
+            <div class="flex justify-between items-center h-20">
+                <a href="index.html" class="flex items-center space-x-2 text-sm font-medium tracking-widest text-slate-600 dark:text-slate-300 hover:text-black dark:hover:text-white transition-colors group">
+                    <i class="fas fa-arrow-left transform group-hover:-translate-x-1 transition-transform"></i>
+                    <span>BACK TO PORTFOLIO</span>
+                </a>
+                
+                <button id="theme-toggle" class="p-2 rounded-full text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white transition-colors focus:outline-none">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:block"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="pt-40 pb-20 px-6 sm:px-8 lg:px-12 max-w-6xl mx-auto">
+        <div class="animate-on-scroll fade-up">
+            <h1 class="text-4xl md:text-6xl font-black mb-6 tracking-tight text-slate-900 dark:text-white">极致气象体验</h1>
+            <p class="text-xl md:text-2xl font-light text-slate-600 dark:text-slate-400 mb-10 max-w-3xl">遵循 Apple HIG 规范，由 React 强力驱动的一抹纯净天空。</p>
+            
+            <div class="flex flex-wrap gap-3 mb-16">
+                <span class="px-4 py-2 bg-slate-200 dark:bg-slate-800 rounded-full text-xs font-semibold tracking-wider uppercase text-slate-700 dark:text-slate-300">React</span>
+                <span class="px-4 py-2 bg-slate-200 dark:bg-slate-800 rounded-full text-xs font-semibold tracking-wider uppercase text-slate-700 dark:text-slate-300">Tailwind CSS</span>
+                <span class="px-4 py-2 bg-slate-200 dark:bg-slate-800 rounded-full text-xs font-semibold tracking-wider uppercase text-slate-700 dark:text-slate-300">OpenWeather API</span>
+            </div>
+        </div>
+
+        <div class="w-full h-64 md:h-[500px] bg-slate-200 dark:bg-slate-800 rounded-3xl overflow-hidden animate-on-scroll fade-in delay-200 shadow-2xl relative flex items-center justify-center border border-slate-300 dark:border-slate-700">
+            <div class="absolute inset-0 bg-gradient-to-tr from-sky-300/20 to-blue-500/10"></div>
+            <i class="fas fa-cloud-sun-rain text-8xl text-slate-300 dark:text-slate-600"></i>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto px-6 sm:px-8 lg:px-12 py-20">
+        <div class="space-y-24">
+            <section class="animate-on-scroll fade-up">
+                <h2 class="text-xs font-bold tracking-[0.2em] text-slate-400 uppercase mb-4">01. The Challenge</h2>
+                <h3 class="text-3xl font-bold mb-6 text-slate-800 dark:text-slate-100">简化复杂数据</h3>
+                <div class="text-slate-600 dark:text-slate-400 space-y-4 font-light leading-loose text-lg">
+                    <p>市面上的天气应用大多堆砌了繁杂的气象数据，用户难以第一时间捕获核心信息。本项目的使命是“做减法”：通过极简的空间留白与直观的图形状态，摒弃一切不必要的信息噪音。</p>
+                </div>
+            </section>
+            
+            <section class="animate-on-scroll fade-up">
+                <h2 class="text-xs font-bold tracking-[0.2em] text-slate-400 uppercase mb-4">02. Solutions</h2>
+                <h3 class="text-3xl font-bold mb-6 text-slate-800 dark:text-slate-100">视觉与交互设计</h3>
+                <div class="text-slate-600 dark:text-slate-400 space-y-4 font-light leading-loose text-lg">
+                    <p>在界面渲染上，借助 Tailwind CSS 封装了多种依赖真实时间戳与天气代码的 UI 渐变背景（清晨、黄昏、雨夜等）。</p>
+                    <p>通过 Lottie 集成了微动效（如浮云飘动、雨滴下落），极大地提升了情感化设计维度。由于使用纯函数式组件封装状态逻辑，代码量减少了近一倍，启动速度极快。</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="bg-slate-900 border-t border-slate-800 pt-20 pb-12 mt-20">
+        <div class="max-w-4xl mx-auto px-6 text-center animate-on-scroll fade-up">
+            <h4 class="text-xs font-bold tracking-[0.2em] text-slate-500 uppercase mb-6">Next Project</h4>
+            <a href="project-uilib.html" class="inline-block group text-3xl md:text-5xl font-bold text-white hover:text-blue-400 transition-colors duration-300">
+                UI组件库构建 <i class="fas fa-arrow-right ml-4 transform group-hover:translate-x-4 transition-transform duration-300"></i>
+            </a>
+            <div class="border-t border-slate-800 pt-8 mt-24 text-xs tracking-widest text-slate-500 font-medium">
+                <p>&copy; 2026 DevFolio.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
