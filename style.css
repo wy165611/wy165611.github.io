@@ -1,43 +1,78 @@
-/* 自定义滚动条样式（可选） */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+html {
+    scroll-behavior: smooth;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* 隐藏部分浏览器的默认滚动条以匹配高端设计 */
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f5f9;
-}
-
-.dark ::-webkit-scrollbar-track {
-    background: #0f172a;
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #94a3b8;
-    border-radius: 4px;
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: #334155;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #64748b;
+    background: #94a3b8;
 }
 
-/* 滚动出现的动画初始状态 */
+/* ================= 鼠标跟随光晕特效 ================= */
+#cursor-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(147, 197, 253, 0.15) 0%, transparent 60%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    /* 防止遮挡点击 */
+    z-index: 9999;
+    will-change: transform, left, top;
+}
+
+.dark #cursor-glow {
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 60%);
+}
+
+/* ================= 滚动进场动画 ================= */
 .animate-on-scroll {
     opacity: 0;
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
 }
 
-/* 向上浮现 */
 .fade-up {
-    transform: translateY(30px);
+    transform: translateY(40px);
 }
 
-/* 当通过 JS 添加 .show 时的最终状态 */
+.fade-in {
+    transform: scale(0.95);
+}
+
 .animate-on-scroll.show {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
 }
 
-/* 延迟类，用于技能条和卡片依次出现 */
+/* 延迟类 */
 .delay-100 {
     transition-delay: 100ms;
 }
@@ -48,4 +83,63 @@
 
 .delay-300 {
     transition-delay: 300ms;
+}
+
+.delay-400 {
+    transition-delay: 400ms;
+}
+
+/* ================= 技能条动画 ================= */
+.skill-bar-fill {
+    width: 0;
+    /* 默认宽度0，由JS触发 */
+    transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ================= 3D 翻转卡片 ================= */
+.perspective-1000 {
+    perspective: 1000px;
+}
+
+.transform-style-3d {
+    transform-style: preserve-3d;
+}
+
+.backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+    transform: rotateY(180deg);
+}
+
+.group:hover .group-hover\:rotate-y-180 {
+    transform: rotateY(180deg);
+}
+
+/* 悬停上浮与阴影加深 (Tailwind 自带 shadow 处理，但补充浮动过渡) */
+.hover-float {
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+}
+
+.hover-float:hover {
+    transform: translateY(-8px);
+}
+
+/* ================= 其他细节 ================= */
+.glass-nav {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: background-color 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.nav-hidden {
+    transform: translateY(-100%);
+}
+
+.text-gradient {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }

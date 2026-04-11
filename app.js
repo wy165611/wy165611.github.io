@@ -1,58 +1,144 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. 移动端汉堡菜单切换逻辑
+    // 1. 移动端汉堡菜单逻辑
     const btn = document.getElementById('mobile-menu-btn');
     const menu = document.getElementById('mobile-menu');
 
     btn.addEventListener('click', () => {
-        menu.classList.toggle('hidden');
-    });
-
-    // 点击菜单项后自动收起菜单
-    menu.addEventListener('click', () => {
-        menu.classList.add('hidden');
-    });
-
-    // 2. 明暗主题切换逻辑
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const htmlElement = document.documentElement;
-
-    // 检查本地存储中是否有用户偏好，或者系统偏好
-    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        htmlElement.classList.add('dark');
-    } else {
-        htmlElement.classList.remove('dark');
-    }
-
-    // 点击切换按钮
-    themeToggleBtn.addEventListener('click', () => {
-        htmlElement.classList.toggle('dark');
-        // 保存用户偏好到本地存储
-        if (htmlElement.classList.contains('dark')) {
-            localStorage.theme = 'dark';
+        if (menu.classList.contains('hidden')) {
+            menu.classList.remove('hidden');
+            menu.classList.add('flex');
+            // 简单淡入动画延迟
+            setTimeout(() => menu.style.opacity = '1', 10);
         } else {
-            localStorage.theme = 'light';
+            menu.style.opacity = '0';
+            setTimeout(() => {
+                menu.classList.remove('flex');
+                menu.classList.add('hidden');
+            }, 300); // 等待过渡
         }
     });
 
-    // 3. 滚动动画逻辑 (使用 Intersection Observer API)
+    menu.addEventListener('click', (e) => {
+        if (e.target.tagName === 'A') {
+            menu.style.opacity = '0';
+            setTimeout(() => {
+                menu.classList.remove('flex');
+                menu.classList.add('hidden');
+            }, 300);
+        }
+    });
+
+    // 2. 明暗主题切换逻辑
+    const themeToggleBtns = [document.getElementById('theme-toggle'), document.getElementById('theme-toggle-mobile')];
+    const htmlElement = document.documentElement;
+
+    const applyTheme = (isDark) => {
+        if (isDark) {
+            htmlElement.classList.add('dark');
+            localStorage.theme = 'dark';
+        } else {
+            htmlElement.classList.remove('dark');
+            localStorage.theme = 'light';
+        }
+    };
+
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        applyTheme(true);
+    } else {
+        applyTheme(false);
+    }
+
+    themeToggleBtns.forEach(btn => {
+        if (btn) {
+            btn.addEventListener('click', () => {
+                applyTheme(!htmlElement.classList.contains('dark'));
+            });
+        }
+    });
+
+    // 3. 导航栏滚动交互：变色与自动隐藏
+    const navbar = document.getElementById('navbar');
+    let lastScrollY = window.scrollY;
+
+    window.addEventListener('scroll', () => {
+        const currentScrollY = window.scrollY;
+
+        // 导航背景变色/模糊 (非顶部区域加深玻璃感)
+        if (currentScrollY > 50) {
+            navbar.classList.replace('border-transparent', 'border-slate-200');
+            navbar.classList.add('dark:border-slate-800');
+            navbar.style.backgroundColor = htmlElement.classList.contains('dark') ? 'rgba(11, 17, 32, 0.85)' : 'rgba(255, 255, 255, 0.85)';
+        } else {
+            navbar.classList.replace('border-slate-200', 'border-transparent');
+            navbar.classList.remove('dark:border-slate-800');
+            navbar.style.backgroundColor = 'transparent';
+        }
+
+        // 向上滚动显示，向下滚动隐藏
+        if (currentScrollY > 200) {
+            if (currentScrollY > lastScrollY) {
+                navbar.classList.add('nav-hidden');
+            } else {
+                navbar.classList.remove('nav-hidden');
+            }
+        }
+        lastScrollY = currentScrollY;
+    });
+
+    // 4. 鼠标跟随光晕
+    const cursorGlow = document.getElementById('cursor-glow');
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursorGlow.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+    });
+
+    // 5. 首页视差背景效果
+    const homeSection = document.getElementById('home');
+    const parallaxBg = document.getElementById('parallax-bg');
+    if (homeSection && parallaxBg) {
+        homeSection.addEventListener('mousemove', (e) => {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            // 计算偏差，范围在 -1 到 1 之间
+            const offsetX = (e.clientX / width - 0.5) * 2;
+            const offsetY = (e.clientY / height - 0.5) * 2;
+
+            // 视差移动系数
+            parallaxBg.style.transform = `translate(${offsetX * -30}px, ${offsetY * -30}px)`;
+        });
+
+        homeSection.addEventListener('mouseleave', () => {
+            parallaxBg.style.transform = 'translate(0px, 0px)';
+        });
+    }
+
+    // 6. 滚动动画 Intersection Observer
     const observerOptions = {
         root: null,
         rootMargin: '0px',
-        threshold: 0.1 // 当元素有 10% 进入视口时触发
+        threshold: 0.15
     };
 
-    const observer = new IntersectionObserver((entries, observer) => {
+    const animateObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // 元素进入视口，添加 show 类触发 CSS 动画
                 entry.target.classList.add('show');
-                // 触发后停止观察该元素，确保动画只播放一次
+
+                // 处理技能条动态加载
+                const skillBar = entry.target.querySelector('.skill-bar-fill');
+                if (skillBar) {
+                    const widthLimit = skillBar.getAttribute('data-width');
+                    skillBar.style.width = widthLimit;
+                }
+
                 observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
-    // 获取所有带有 animate-on-scroll 类的元素并开始观察
-    const animateElements = document.querySelectorAll('.animate-on-scroll');
-    animateElements.forEach(el => observer.observe(el));
+    document.querySelectorAll('.animate-on-scroll').forEach(el => animateObserver.observe(el));
 });

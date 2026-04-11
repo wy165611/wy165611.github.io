@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="前端开发者的个人主页与作品集">
-    <meta name="keywords" content="前端开发, 个人主页, 简历, 作品集, Web开发">
+    <meta name="description" content="高级前端开发者的个人主页与作品集">
+    <meta name="keywords" content="前端开发, 个人主页, 简历, 作品集, Web开发, 高端极简">
     <title>我的个人主页 | 极简科技风</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -18,8 +18,12 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#1e3a8a', // 深蓝色
-                        darkBg: '#0f172a',  // 暗黑背景色
+                        primary: '#475569', // 莫兰迪暗雅灰蓝
+                        darkBg: '#0b1120',  // 深邃科技黑
+                        darkCard: '#1e293b', // 深色卡片背景
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
                     }
                 }
             }
@@ -27,147 +31,341 @@
     </script>
 </head>
 
-<body class="bg-slate-50 text-slate-800 dark:bg-darkBg dark:text-slate-200 transition-colors duration-300 font-sans">
+<body
+    class="bg-slate-50 text-slate-800 dark:bg-darkBg dark:text-slate-200 transition-colors duration-500 font-sans overflow-x-hidden">
 
-    <header class="fixed w-full top-0 z-50 bg-white/80 dark:bg-darkBg/80 backdrop-blur-md shadow-sm">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <a href="#" class="text-xl font-bold tracking-wider text-primary dark:text-blue-400">DevPortfolio</a>
+    <!-- 鼠标光晕 -->
+    <div id="cursor-glow"></div>
 
-                <nav class="hidden md:flex space-x-8 items-center">
-                    <a href="#about" class="hover:text-primary dark:hover:text-blue-400 transition">关于我</a>
-                    <a href="#skills" class="hover:text-primary dark:hover:text-blue-400 transition">技能</a>
-                    <a href="#projects" class="hover:text-primary dark:hover:text-blue-400 transition">项目</a>
-                    <a href="#contact" class="hover:text-primary dark:hover:text-blue-400 transition">联系我</a>
+    <!-- 导航栏 -->
+    <header id="navbar" class="fixed w-full top-0 z-50 glass-nav border-b border-transparent">
+        <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
+            <div class="flex justify-between items-center h-20 transition-all duration-300" id="nav-container">
+                <a href="#"
+                    class="text-2xl font-bold tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-slate-600 to-slate-900 dark:from-slate-200 dark:to-white">
+                    DevFolio.
+                </a>
+
+                <nav class="hidden md:flex space-x-10 items-center text-sm font-medium tracking-wide">
+                    <a href="#about" class="hover:text-slate-900 dark:hover:text-white transition-colors">关于</a>
+                    <a href="#skills" class="hover:text-slate-900 dark:hover:text-white transition-colors">技能</a>
+                    <a href="#projects" class="hover:text-slate-900 dark:hover:text-white transition-colors">项目</a>
+                    <a href="#contact" class="hover:text-slate-900 dark:hover:text-white transition-colors">联系</a>
                     <button id="theme-toggle"
-                        class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+                        class="p-2 ml-4 rounded-full text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white transition-colors focus:outline-none">
                         <i class="fas fa-moon dark:hidden"></i>
-                        <i class="fas fa-sun hidden dark:block text-yellow-400"></i>
+                        <i class="fas fa-sun hidden dark:block"></i>
                     </button>
                 </nav>
 
                 <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-2xl focus:outline-none">
+                    <button id="theme-toggle-mobile"
+                        class="p-2 mr-2 rounded-full text-slate-500 dark:text-slate-400 focus:outline-none">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block"></i>
+                    </button>
+                    <button id="mobile-menu-btn"
+                        class="text-2xl text-slate-700 dark:text-slate-300 focus:outline-none transition-transform">
                         <i class="fas fa-bars"></i>
                     </button>
                 </div>
             </div>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-slate-800 shadow-lg">
-            <a href="#about" class="block px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700">关于我</a>
-            <a href="#skills" class="block px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700">技能</a>
-            <a href="#projects" class="block px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700">项目</a>
-            <a href="#contact" class="block px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700">联系我</a>
+        <!-- 移动端菜单 -->
+        <div id="mobile-menu"
+            class="fixed inset-0 top-20 bg-white/95 dark:bg-darkBg/95 backdrop-blur-xl z-40 hidden flex-col items-center justify-center space-y-8 text-xl font-medium tracking-widest transition-opacity">
+            <a href="#about"
+                class="text-slate-600 hover:text-black dark:text-slate-400 dark:hover:text-white transition">关于</a>
+            <a href="#skills"
+                class="text-slate-600 hover:text-black dark:text-slate-400 dark:hover:text-white transition">技能</a>
+            <a href="#projects"
+                class="text-slate-600 hover:text-black dark:text-slate-400 dark:hover:text-white transition">项目</a>
+            <a href="#contact"
+                class="text-slate-600 hover:text-black dark:text-slate-400 dark:hover:text-white transition">联系</a>
         </div>
     </header>
 
-    <section id="home" class="pt-32 pb-20 md:pt-48 md:pb-32 flex items-center justify-center min-h-screen">
-        <div class="text-center px-4 animate-on-scroll fade-up">
-            <h1 class="text-4xl md:text-6xl font-bold mb-6">你好，我是 <span
-                    class="text-primary dark:text-blue-400">前端开发者</span></h1>
-            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-2xl mx-auto">
-                热爱编写简洁、优雅的代码。致力于构建现代化的用户体验和高性能的Web应用。</p>
-            <div class="flex justify-center space-x-4">
+    <!-- 主视觉区(Hero Section) -->
+    <section id="home"
+        class="relative pt-32 pb-20 md:pt-48 md:pb-32 flex items-center justify-center min-h-screen overflow-hidden">
+        <!-- 视差背景容器 -->
+        <div id="parallax-bg"
+            class="absolute inset-0 z-0 pointer-events-none opacity-20 dark:opacity-10 transition-transform duration-100 ease-out">
+            <div
+                class="absolute top-[20%] left-[10%] w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob">
+            </div>
+            <div
+                class="absolute top-[30%] right-[10%] w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000">
+            </div>
+            <div
+                class="absolute -bottom-8 left-[40%] w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000">
+            </div>
+        </div>
+
+        <div class="text-center px-4 z-10 animate-on-scroll fade-up max-w-4xl mx-auto">
+            <p class="text-sm md:text-base font-semibold tracking-[0.2em] text-slate-500 uppercase mb-4 delay-100">你好，我是
+            </p>
+            <h1
+                class="text-5xl md:text-7xl lg:text-8xl font-black mb-8 tracking-tight text-slate-800 dark:text-white leading-tight">
+                前端<span
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-600 dark:from-slate-200 dark:to-slate-500">架构师</span>
+            </h1>
+            <p
+                class="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-12 max-w-2xl mx-auto font-light leading-relaxed delay-200">
+                将复杂逻辑与极致设计融合。<br />专注于构建丝滑、现代且极具质感的高端Web应用。
+            </p>
+            <div class="flex justify-center space-x-6 animate-on-scroll fade-up delay-300">
                 <a href="#projects"
-                    class="bg-primary hover:bg-blue-800 text-white px-6 py-3 rounded-lg font-medium transition shadow-lg">查看作品</a>
-                <a href="#contact"
-                    class="border border-primary text-primary dark:border-blue-400 dark:text-blue-400 hover:bg-primary hover:text-white dark:hover:bg-blue-400 dark:hover:text-darkBg px-6 py-3 rounded-lg font-medium transition">联系我</a>
+                    class="relative group overflow-hidden bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-8 py-4 rounded-full font-medium transition-transform transform hover:scale-105 shadow-xl hover:shadow-2xl">
+                    <span class="relative z-10 tracking-widest text-sm">探索作品</span>
+                    <div
+                        class="absolute inset-0 h-full w-0 bg-white/20 dark:bg-black/10 transition-[width] group-hover:w-full ease-out duration-300">
+                    </div>
+                </a>
+                <a href="#about"
+                    class="px-8 py-4 rounded-full font-medium tracking-widest text-sm border border-slate-300 dark:border-slate-700 hover:border-slate-600 dark:hover:border-slate-400 transition-colors">
+                    了解更多
+                </a>
             </div>
+        </div>
+
+        <!-- 滚动提示 -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce opacity-50">
+            <i class="fas fa-chevron-down text-xl"></i>
         </div>
     </section>
 
-    <section id="skills" class="py-20 bg-gray-100 dark:bg-slate-800/50">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12 animate-on-scroll fade-up">核心技能</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <div class="animate-on-scroll fade-up delay-100">
-                    <div class="flex justify-between mb-2">
-                        <span class="font-medium">HTML5 & CSS3</span>
-                        <span>90%</span>
-                    </div>
-                    <div class="w-full bg-gray-300 rounded-full h-2.5 dark:bg-gray-700">
-                        <div class="bg-primary dark:bg-blue-500 h-2.5 rounded-full" style="width: 90%"></div>
-                    </div>
-                </div>
-                <div class="animate-on-scroll fade-up delay-200">
-                    <div class="flex justify-between mb-2">
-                        <span class="font-medium">JavaScript (ES6+)</span>
-                        <span>85%</span>
-                    </div>
-                    <div class="w-full bg-gray-300 rounded-full h-2.5 dark:bg-gray-700">
-                        <div class="bg-primary dark:bg-blue-500 h-2.5 rounded-full" style="width: 85%"></div>
+    <!-- 关于我模块 (About) -->
+    <section id="about" class="py-32 bg-white dark:bg-slate-900/50">
+        <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <div class="animate-on-scroll fade-up">
+                    <h2 class="text-sm font-bold tracking-[0.2em] text-slate-400 uppercase mb-3">About Me</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold mb-8 text-slate-800 dark:text-slate-100">
+                        将设计语言<br />转化为优质代码</h3>
+                    <div class="text-slate-600 dark:text-slate-400 space-y-6 font-light leading-loose">
+                        <p>拥有超过5年的前端开发经验。我对细节有着近乎执拗的追求，像素级还原设计稿只是我的基础标准。</p>
+                        <p>从纯静态展示页到复杂的全栈交互系统，我始终坚守代码的优雅性、可维护性与高性能。</p>
+                        <p>我相信，优秀的数字产品不仅仅是功能的堆砌，更是技术与艺术的完美交融。</p>
                     </div>
                 </div>
-                <div class="animate-on-scroll fade-up delay-300">
-                    <div class="flex justify-between mb-2">
-                        <span class="font-medium">Tailwind CSS</span>
-                        <span>80%</span>
-                    </div>
-                    <div class="w-full bg-gray-300 rounded-full h-2.5 dark:bg-gray-700">
-                        <div class="bg-primary dark:bg-blue-500 h-2.5 rounded-full" style="width: 80%"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="projects" class="py-20">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12 animate-on-scroll fade-up">精选项目</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 抽象几何装饰 -->
                 <div
-                    class="bg-white dark:bg-slate-800 rounded-xl shadow-md overflow-hidden hover:-translate-y-2 transition-transform duration-300 animate-on-scroll fade-up delay-100">
-                    <div class="h-48 bg-gray-300 dark:bg-gray-700 flex items-center justify-center">
-                        <span class="text-gray-500 dark:text-gray-400">项目截图占位</span>
+                    class="relative h-[400px] w-full bg-slate-100 dark:bg-slate-800 rounded-2xl overflow-hidden animate-on-scroll fade-in delay-200 shadow-sm border border-slate-200/50 dark:border-slate-700/50 flex items-center justify-center">
+                    <div
+                        class="w-48 h-48 rounded-full border border-slate-300 dark:border-slate-600 absolute blur-[1px]">
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">电商后台管理系统</h3>
-                        <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">一个支持数据可视化、商品管理和订单追踪的响应式后台系统。</p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-xs rounded-md">Vue.js</span>
-                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-xs rounded-md">Tailwind</span>
-                        </div>
-                        <a href="#" class="text-primary dark:text-blue-400 hover:underline text-sm font-medium">查看详情
-                            &rarr;</a>
+                    <div
+                        class="w-64 h-64 rounded-full border border-slate-200 dark:border-slate-700 absolute blur-[2px]">
+                    </div>
+                    <i class="fas fa-code text-6xl text-slate-300 dark:text-slate-600 z-10"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技能模块 (Skills) -->
+    <section id="skills" class="py-32 bg-slate-50 dark:bg-darkBg">
+        <div class="max-w-5xl mx-auto px-6 sm:px-8 lg:px-12">
+            <div class="text-center mb-20 animate-on-scroll fade-up">
+                <h2 class="text-sm font-bold tracking-[0.2em] text-slate-400 uppercase mb-3">Expertise</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-100">核心技能栈</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12">
+                <!-- Skill Item 1 -->
+                <div class="animate-on-scroll fade-up delay-100 group">
+                    <div class="flex justify-between mb-3 text-sm font-medium tracking-wide">
+                        <span
+                            class="text-slate-700 dark:text-slate-300 group-hover:text-black dark:group-hover:text-white transition-colors">核心前端
+                            (HTML/CSS/JS)</span>
+                        <span class="text-slate-500">95%</span>
+                    </div>
+                    <div class="w-full bg-slate-200 dark:bg-slate-800 h-[2px] rounded-full overflow-hidden">
+                        <div class="skill-bar-fill bg-slate-800 dark:bg-slate-200 h-full shadow-[0_0_10px_rgba(0,0,0,0.5)] dark:shadow-[0_0_10px_rgba(255,255,255,0.5)]"
+                            data-width="95%"></div>
                     </div>
                 </div>
-                <div
-                    class="bg-white dark:bg-slate-800 rounded-xl shadow-md overflow-hidden hover:-translate-y-2 transition-transform duration-300 animate-on-scroll fade-up delay-200">
-                    <div class="h-48 bg-gray-300 dark:bg-gray-700 flex items-center justify-center">
-                        <span class="text-gray-500 dark:text-gray-400">项目截图占位</span>
+                <!-- Skill Item 2 -->
+                <div class="animate-on-scroll fade-up delay-200 group">
+                    <div class="flex justify-between mb-3 text-sm font-medium tracking-wide">
+                        <span
+                            class="text-slate-700 dark:text-slate-300 group-hover:text-black dark:group-hover:text-white transition-colors">主流框架
+                            (React/Vue)</span>
+                        <span class="text-slate-500">90%</span>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">极简天气App</h3>
-                        <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">调用第三方API获取实时天气，支持根据时间自动切换背景模式。</p>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-xs rounded-md">JavaScript</span>
-                            <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-xs rounded-md">API</span>
-                        </div>
-                        <a href="#" class="text-primary dark:text-blue-400 hover:underline text-sm font-medium">查看详情
-                            &rarr;</a>
+                    <div class="w-full bg-slate-200 dark:bg-slate-800 h-[2px] rounded-full overflow-hidden">
+                        <div class="skill-bar-fill bg-slate-800 dark:bg-slate-200 h-full shadow-[0_0_10px_rgba(0,0,0,0.5)] dark:shadow-[0_0_10px_rgba(255,255,255,0.5)]"
+                            data-width="90%"></div>
+                    </div>
+                </div>
+                <!-- Skill Item 3 -->
+                <div class="animate-on-scroll fade-up delay-300 group">
+                    <div class="flex justify-between mb-3 text-sm font-medium tracking-wide">
+                        <span
+                            class="text-slate-700 dark:text-slate-300 group-hover:text-black dark:group-hover:text-white transition-colors">现代样式
+                            (Tailwind/Sass)</span>
+                        <span class="text-slate-500">88%</span>
+                    </div>
+                    <div class="w-full bg-slate-200 dark:bg-slate-800 h-[2px] rounded-full overflow-hidden">
+                        <div class="skill-bar-fill bg-slate-800 dark:bg-slate-200 h-full shadow-[0_0_10px_rgba(0,0,0,0.5)] dark:shadow-[0_0_10px_rgba(255,255,255,0.5)]"
+                            data-width="88%"></div>
+                    </div>
+                </div>
+                <!-- Skill Item 4 -->
+                <div class="animate-on-scroll fade-up delay-400 group">
+                    <div class="flex justify-between mb-3 text-sm font-medium tracking-wide">
+                        <span
+                            class="text-slate-700 dark:text-slate-300 group-hover:text-black dark:group-hover:text-white transition-colors">工程化构建
+                            (Vite/Webpack)</span>
+                        <span class="text-slate-500">80%</span>
+                    </div>
+                    <div class="w-full bg-slate-200 dark:bg-slate-800 h-[2px] rounded-full overflow-hidden">
+                        <div class="skill-bar-fill bg-slate-800 dark:bg-slate-200 h-full shadow-[0_0_10px_rgba(0,0,0,0.5)] dark:shadow-[0_0_10px_rgba(255,255,255,0.5)]"
+                            data-width="80%"></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer id="contact" class="bg-gray-900 text-white pt-20 pb-10">
-        <div class="max-w-6xl mx-auto px-4 text-center animate-on-scroll fade-up">
-            <h2 class="text-3xl font-bold mb-6">保持联系</h2>
-            <p class="text-gray-400 mb-8 max-w-md mx-auto">正在寻找新的机会。如果你的团队需要一名前端开发者，或者只想打个招呼，欢迎随时联系我！</p>
-            <a href="mailto:your.email@example.com"
-                class="inline-block bg-primary hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-medium transition mb-12">给我发邮件</a>
+    <!-- 项目作品模块 (Projects) -->
+    <section id="projects" class="py-32 bg-white dark:bg-slate-900/30">
+        <div class="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
+            <div class="text-center mb-20 animate-on-scroll fade-up">
+                <h2 class="text-sm font-bold tracking-[0.2em] text-slate-400 uppercase mb-3">Selected Works</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-100">精选重磅作品</h3>
+            </div>
 
-            <div class="flex justify-center space-x-6 mb-10">
-                <a href="#" class="text-gray-400 hover:text-white text-2xl transition"><i class="fab fa-github"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white text-2xl transition"><i
-                        class="fab fa-linkedin"></i></a>
-                <a href="#" class="text-gray-400 hover:text-white text-2xl transition"><i
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- Card 1 -->
+                <div class="group h-96 perspective-1000 bg-transparent animate-on-scroll fade-up delay-100">
+                    <div
+                        class="relative w-full h-full transform-style-3d transition-transform duration-700 group-hover:rotate-y-180 hover-float shadow-sm group-hover:shadow-2xl rounded-2xl">
+                        <!-- 正面 -->
+                        <div
+                            class="absolute w-full h-full backface-hidden bg-slate-100 dark:bg-darkCard rounded-2xl flex flex-col items-center justify-center border border-slate-200/50 dark:border-slate-800">
+                            <i class="fas fa-chart-line text-5xl text-slate-400 dark:text-slate-500 mb-6"></i>
+                            <h3 class="text-2xl font-bold text-slate-800 dark:text-white tracking-wide">数据可视化看板</h3>
+                            <p class="text-slate-500 mt-2 text-sm">Vue3 + ECharts</p>
+                        </div>
+                        <!-- 背面 -->
+                        <div
+                            class="absolute w-full h-full backface-hidden rotate-y-180 bg-slate-800 dark:bg-slate-800 rounded-2xl p-8 flex flex-col justify-between border border-slate-700 text-white shadow-inner">
+                            <div>
+                                <h3 class="text-2xl font-bold mb-4">企业级数字大屏</h3>
+                                <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                                    这是一个高并发环境下实时更新的数据大屏。采用 WebGL 深度优化渲染性能，确保在海量数据节点下保持帧率在 60fps 以上。
+                                </p>
+                            </div>
+                            <div class="flex justify-between items-center pb-2 border-b border-slate-700">
+                                <span class="text-xs uppercase tracking-widest text-slate-400">View Project</span>
+                                <a href="#"
+                                    class="text-white hover:text-blue-400 transition transform hover:translate-x-1"><i
+                                        class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="group h-96 perspective-1000 bg-transparent animate-on-scroll fade-up delay-200">
+                    <div
+                        class="relative w-full h-full transform-style-3d transition-transform duration-700 group-hover:rotate-y-180 hover-float shadow-sm group-hover:shadow-2xl rounded-2xl">
+                        <div
+                            class="absolute w-full h-full backface-hidden bg-slate-100 dark:bg-darkCard rounded-2xl flex flex-col items-center justify-center border border-slate-200/50 dark:border-slate-800">
+                            <i class="fas fa-mobile-screen text-5xl text-slate-400 dark:text-slate-500 mb-6"></i>
+                            <h3 class="text-2xl font-bold text-slate-800 dark:text-white tracking-wide">极简天气应用</h3>
+                            <p class="text-slate-500 mt-2 text-sm">React + Tailwind</p>
+                        </div>
+                        <div
+                            class="absolute w-full h-full backface-hidden rotate-y-180 bg-slate-800 dark:bg-slate-800 rounded-2xl p-8 flex flex-col justify-between border border-slate-700 text-white shadow-inner">
+                            <div>
+                                <h3 class="text-2xl font-bold mb-4">极致气象体验</h3>
+                                <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                                    完全遵循 Apple HIG 规范设计。通过精细的过渡动画以及基于 Lottie 的微交互，带给用户最直观且舒适的天气查阅体验。
+                                </p>
+                            </div>
+                            <div class="flex justify-between items-center pb-2 border-b border-slate-700">
+                                <span class="text-xs uppercase tracking-widest text-slate-400">View Project</span>
+                                <a href="#"
+                                    class="text-white hover:text-blue-400 transition transform hover:translate-x-1"><i
+                                        class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="group h-96 perspective-1000 bg-transparent animate-on-scroll fade-up delay-300">
+                    <div
+                        class="relative w-full h-full transform-style-3d transition-transform duration-700 group-hover:rotate-y-180 hover-float shadow-sm group-hover:shadow-2xl rounded-2xl">
+                        <div
+                            class="absolute w-full h-full backface-hidden bg-slate-100 dark:bg-darkCard rounded-2xl flex flex-col items-center justify-center border border-slate-200/50 dark:border-slate-800">
+                            <i class="fas fa-layer-group text-5xl text-slate-400 dark:text-slate-500 mb-6"></i>
+                            <h3 class="text-2xl font-bold text-slate-800 dark:text-white tracking-wide">UI组件库构建</h3>
+                            <p class="text-slate-500 mt-2 text-sm">TypeScript + Unocss</p>
+                        </div>
+                        <div
+                            class="absolute w-full h-full backface-hidden rotate-y-180 bg-slate-800 dark:bg-slate-800 rounded-2xl p-8 flex flex-col justify-between border border-slate-700 text-white shadow-inner">
+                            <div>
+                                <h3 class="text-2xl font-bold mb-4">开源设计系统</h3>
+                                <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                                    为内部团队打造的高度可复用组件库。支持极度灵活的 Theme API 定制，提供完善的文档和自动化单元测试，大幅提升开发人效。
+                                </p>
+                            </div>
+                            <div class="flex justify-between items-center pb-2 border-b border-slate-700">
+                                <span class="text-xs uppercase tracking-widest text-slate-400">View Github</span>
+                                <a href="#"
+                                    class="text-white hover:text-blue-400 transition transform hover:translate-x-1"><i
+                                        class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系与页脚 (Footer) -->
+    <footer id="contact" class="bg-slate-900 border-t border-slate-800 pt-24 pb-12 relative overflow-hidden">
+        <div
+            class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjMGYxNzJhIj48L3JlY3Q+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9IiMxZTI5M2IiPjwvcmVjdD4KPC9zdmc+')] opacity-50 z-0">
+        </div>
+        <div class="max-w-4xl mx-auto px-6 relative z-10 text-center animate-on-scroll fade-up">
+            <h2 class="text-4xl font-bold mb-8 text-white tracking-tight">开启一段新的合作</h2>
+            <p class="text-slate-400 mb-12 font-light leading-relaxed max-w-lg mx-auto">
+                如果您对我的作品感兴趣，或者探讨某些有趣的技术想法，我的收件箱始终为您敞开。我会尽量在第一时间回复。
+            </p>
+            <a href="mailto:contact@example.com" class="inline-block relative group">
+                <div
+                    class="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full blur opacity-40 group-hover:opacity-75 transition duration-500 group-hover:duration-200">
+                </div>
+                <div
+                    class="relative bg-slate-900 border border-slate-700 text-white px-10 py-4 rounded-full font-medium tracking-widest text-sm uppercase inset-0 hover:bg-slate-800 transition-colors">
+                    Say Hello
+                </div>
+            </a>
+
+            <div class="flex justify-center space-x-8 mt-20 mb-10">
+                <a href="#"
+                    class="text-slate-500 hover:text-white hover:-translate-y-1 transition-all duration-300 text-xl"><i
+                        class="fab fa-github"></i></a>
+                <a href="#"
+                    class="text-slate-500 hover:text-blue-400 hover:-translate-y-1 transition-all duration-300 text-xl"><i
+                        class="fab fa-linkedin-in"></i></a>
+                <a href="#"
+                    class="text-slate-500 hover:text-blue-400 hover:-translate-y-1 transition-all duration-300 text-xl"><i
                         class="fab fa-twitter"></i></a>
+                <a href="#"
+                    class="text-slate-500 hover:text-pink-500 hover:-translate-y-1 transition-all duration-300 text-xl"><i
+                        class="fab fa-dribbble"></i></a>
             </div>
 
-            <div class="border-t border-gray-800 pt-8 text-sm text-gray-500">
-                <p>&copy; 2026 DevPortfolio. All rights reserved.</p>
+            <div
+                class="border-t border-slate-800 pt-8 mt-12 flex flex-col md:flex-row justify-between items-center text-xs tracking-widest text-slate-500 font-medium">
+                <p>&copy; 2026 DevFolio. Crafted with care.</p>
+                <p class="mt-4 md:mt-0">Designed by Hand, Built with Code.</p>
             </div>
         </div>
     </footer>
