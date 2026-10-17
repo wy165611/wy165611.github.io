@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f4">
+  <meta name="description" content="一份帮助你梳理导师选择顾虑的自我反思问卷。">
+  <title>导师选择：看清自己的底线</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #20231f;
+      --muted: #70766e;
+      --line: #e4e7df;
+      --paper: #fff;
+      --canvas: #f7f7f4;
+      --green: #4e7259;
+      --green-dark: #385642;
+      --green-pale: #edf3ed;
+      --peach: #e8b08b;
+      --shadow: 0 18px 50px rgba(40, 49, 40, .07);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      line-height: 1.7;
+    }
+    button, input, textarea { font: inherit; }
+    .page { width: min(820px, calc(100% - 32px)); margin: 0 auto; padding: 42px 0 68px; }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(28px, 6vw, 54px);
+      border: 1px solid #e7e9e2;
+      border-radius: 28px;
+      background: linear-gradient(128deg, #fff 5%, #f0f4ee 100%);
+      box-shadow: var(--shadow);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 210px; height: 210px;
+      right: -74px; top: -92px;
+      border: 1px solid rgba(78,114,89,.18);
+      border-radius: 50%;
+      box-shadow: 0 0 0 22px rgba(78,114,89,.035), 0 0 0 46px rgba(78,114,89,.025);
+      pointer-events: none;
+    }
+    .eyebrow { display: flex; align-items: center; gap: 10px; color: var(--green); font-size: 13px; font-weight: 700; letter-spacing: .12em; }
+    .eyebrow::before { content: ""; width: 24px; height: 2px; background: var(--peach); }
+    h1 { max-width: 600px; margin: 18px 0 14px; font-family: "Songti SC", "Noto Serif SC", serif; font-size: clamp(32px, 7vw, 52px); font-weight: 600; letter-spacing: .015em; line-height: 1.2; }
+    .hero p { max-width: 570px; margin: 0; color: #596058; font-size: 16px; }
+    .hero-note { display: inline-flex; align-items: center; gap: 8px; margin-top: 24px; padding: 8px 12px; border: 1px solid #e4e9e0; border-radius: 999px; background: rgba(255,255,255,.68); color: #5a685b; font-size: 12px; }
+    .hero-note span { color: var(--green); }
+    .progress-wrap { position: sticky; z-index: 5; top: 0; margin: 18px 0 28px; padding: 13px 16px; border: 1px solid rgba(228,231,223,.9); border-radius: 16px; background: rgba(247,247,244,.92); backdrop-filter: blur(12px); }
+    .progress-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; color: var(--muted); font-size: 12px; }
+    .progress-top strong { color: var(--green-dark); font-weight: 700; }
+    .progress-track { height: 5px; overflow: hidden; border-radius: 99px; background: #e5e9e1; }
+    .progress-fill { width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--green), #91ad8c); transition: width .25s ease; }
+    form { display: grid; gap: 22px; }
+    .stage { overflow: hidden; border: 1px solid var(--line); border-radius: 22px; background: var(--paper); box-shadow: 0 10px 32px rgba(40,49,40,.035); }
+    .stage-head { display: flex; gap: 16px; align-items: flex-start; padding: 25px 28px 20px; border-bottom: 1px solid #edf0e9; background: linear-gradient(120deg, #fff, #fbfcfa); }
+    .stage-num { display: grid; flex: 0 0 42px; width: 42px; height: 42px; place-items: center; border-radius: 14px; background: var(--green-pale); color: var(--green-dark); font-family: Georgia, serif; font-size: 19px; }
+    .stage-head h2 { margin: 0; font-size: 19px; font-weight: 700; line-height: 1.4; }
+    .stage-head p { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+    .questions { padding: 0 28px; }
+    fieldset { min-width: 0; margin: 0; padding: 25px 0 26px; border: 0; border-bottom: 1px solid #edf0e9; }
+    fieldset:last-child { border-bottom: 0; }
+    legend { width: 100%; padding: 0; font-size: 15px; font-weight: 700; line-height: 1.65; }
+    .qnum { margin-right: 8px; color: var(--green); font-family: Georgia, serif; font-size: 13px; font-weight: 700; }
+    .hint { margin: 7px 0 14px 25px; color: var(--muted); font-size: 12px; }
+    .options { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; margin-left: 25px; }
+    .option { position: relative; display: flex; gap: 11px; align-items: flex-start; min-height: 48px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 13px; background: #fff; color: #3e453f; cursor: pointer; transition: border-color .15s, background .15s, box-shadow .15s; }
+    .option:hover { border-color: #a9bba8; background: #fbfdfb; }
+    .option:has(input:checked) { border-color: var(--green); background: #f2f7f1; box-shadow: inset 0 0 0 1px var(--green); color: #2f4d37; }
+    .option input { flex: 0 0 auto; width: 17px; height: 17px; margin: 3px 0 0; accent-color: var(--green); }
+    .option span { font-size: 13px; line-height: 1.55; }
+    .answer { display: block; width: calc(100% - 25px); min-height: 82px; margin: 13px 0 0 25px; padding: 12px 14px; resize: vertical; border: 1px solid var(--line); border-radius: 12px; outline: none; background: #fdfdfc; color: var(--ink); font-size: 13px; transition: border-color .15s, box-shadow .15s; }
+    .answer::placeholder { color: #a4aaa2; }
+    .answer:focus { border-color: #87a18a; box-shadow: 0 0 0 3px rgba(78,114,89,.1); }
+    .final-choice { display: grid; gap: 12px; margin: 15px 0 0 25px; }
+    .final-choice .option { padding: 16px; }
+    .final-choice .option strong { display: block; margin-bottom: 3px; color: #2f4d37; font-size: 14px; }
+    .final-choice .option span { color: #596058; }
+    .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 2px; padding: 18px; border: 1px solid var(--line); border-radius: 18px; background: #fff; box-shadow: var(--shadow); }
+    .actions button { min-height: 44px; padding: 10px 17px; border: 1px solid transparent; border-radius: 12px; cursor: pointer; font-size: 13px; font-weight: 700; transition: transform .15s, background .15s; }
+    .actions button:hover { transform: translateY(-1px); }
+    .primary { background: var(--green); color: #fff; }
+    .primary:hover { background: var(--green-dark); }
+    .secondary { border-color: var(--line) !important; background: #fff; color: #49534a; }
+    .quiet { margin-left: auto; background: transparent; color: var(--muted); }
+    .privacy { width: 100%; margin: 3px 0 0; color: var(--muted); font-size: 11px; }
+    .honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+    .status { min-height: 22px; margin: 0; color: var(--green-dark); font-size: 13px; }
+    .status.error { color: #a04437; }
+    footer { padding: 22px 8px 0; color: #8a9087; font-size: 11px; text-align: center; }
+    @media (max-width: 600px) {
+      .page { width: min(100% - 20px, 820px); padding-top: 16px; }
+      .hero { border-radius: 21px; }
+      .hero p { font-size: 14px; }
+      .progress-wrap { margin: 12px 0 18px; }
+      .stage { border-radius: 18px; }
+      .stage-head { padding: 20px 18px 17px; }
+      .questions { padding: 0 18px; }
+      fieldset { padding: 21px 0 22px; }
+      .options { grid-template-columns: 1fr; margin-left: 0; }
+      .hint { margin-left: 0; }
+      .answer { width: 100%; margin-left: 0; }
+      .final-choice { margin-left: 0; }
+      .actions { padding: 14px; }
+      .quiet { margin-left: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div class="eyebrow">一份给自己的梳理</div>
+      <h1>导师选择，<br>先看清自己的底线</h1>
+      <p>这不是替你选导师的测试。它想帮你分清：你更害怕被批评，还是更害怕无人指路、最后无法顺利毕业？按真实感受作答，不必选“看起来正确”的答案。</p>
+      <div class="hero-note"><span>●</span> 共 7 个问题 · 可随时保存或导出</div>
+    </header>
+
+    <div class="progress-wrap" aria-label="答题进度">
+      <div class="progress-top"><span>答题进度</span><strong id="progress-label">已完成 0 / 7</strong></div>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    </div>
+
+    <form id="reflection-form">
+      <section class="stage" aria-labelledby="stage-one-title">
+        <div class="stage-head"><div class="stage-num">01</div><div><h2 id="stage-one-title">剥离抽象的恐惧</h2><p>看清自己到底怕什么</p></div></div>
+        <div class="questions">
+          <fieldset data-question>
+            <legend><span class="qnum">01</span>假如你这周任务没做完，老导师黑着脸对你说：“怎么做成这样？拿回去按这个步骤重做！”说完就去忙别的了，你会因为这句话难受多久？</legend>
+            <p class="hint">选一个最接近的感受，也可以在下面补充。</p>
+            <div class="options">
+              <label class="option"><input type="radio" name="q1" value="一小时左右" required><span>一小时左右，缓一缓就过去了</span></label>
+              <label class="option"><input type="radio" name="q1" value="一天左右"><span>大半天到一天</span></label>
+              <label class="option"><input type="radio" name="q1" value="好几天"><span>好几天，反复回想</span></label>
+              <label class="option"><input type="radio" name="q1" value="一周或更久"><span>一周或更久，可能影响睡眠和状态</span></label>
+            </div>
+            <textarea class="answer" name="q1_note" placeholder="也可以写下：最刺痛你的会是什么？（选填）"></textarea>
+          </fieldset>
+
+          <fieldset data-question>
+            <legend><span class="qnum">02</span>换个场景：你连续一个月做不出东西，年轻导师笑眯眯地说：“没事，我不怪你，你回去自己再想想办法。”但你回到宿舍，面对空白的电脑屏幕，完全不知道下一步该干嘛——这种抓瞎的感觉，和刚才被老导师说两句相比，哪个更让你窒息？</legend>
+            <div class="options">
+              <label class="option"><input type="radio" name="q2" value="被老导师批评" required><span>被老导师批评更让我窒息</span></label>
+              <label class="option"><input type="radio" name="q2" value="独自摸索、没有方向"><span>独自摸索、完全没方向更让我窒息</span></label>
+              <label class="option"><input type="radio" name="q2" value="两种都很难受"><span>两种都很难受，程度差不多</span></label>
+              <label class="option"><input type="radio" name="q2" value="要看具体情况"><span>要看具体情况</span></label>
+            </div>
+            <textarea class="answer" name="q2_note" placeholder="什么情况下这种感受会更强？（选填）"></textarea>
+          </fieldset>
+
+          <fieldset data-question>
+            <legend><span class="qnum">03</span>你害怕“做不好被说”，更接近下面哪种情况？</legend>
+            <div class="options">
+              <label class="option"><input type="radio" name="q3" value="不知道怎么做、交不出差" required><span>确实不知道该怎么做，所以担心交不出差</span></label>
+              <label class="option"><input type="radio" name="q3" value="知道怎么做但受不了凶语气"><span>即使知道怎么做，只要语气凶一点我就容易崩溃</span></label>
+              <label class="option"><input type="radio" name="q3" value="两者都有"><span>两者都有</span></label>
+              <label class="option"><input type="radio" name="q3" value="还说不清"><span>我还说不清</span></label>
+            </div>
+            <textarea class="answer" name="q3_note" placeholder="最近一次让你有这种担心的事情是？（选填）"></textarea>
+          </fieldset>
+        </div>
+      </section>
+
+      <section class="stage" aria-labelledby="stage-two-title">
+        <div class="stage-head"><div class="stage-num">02</div><div><h2 id="stage-two-title">测试“兜底”与“救赎”</h2><p>看看哪一边的代价你更能承受</p></div></div>
+        <div class="questions">
+          <fieldset data-question>
+            <legend><span class="qnum">04</span>如果老导师平时不苟言笑，但组里的师兄师姐人很好，90% 的问题你都可以先问他们，把东西改好了再去见导师——这样能减少你 80% 的害怕吗？</legend>
+            <div class="options">
+              <label class="option"><input type="radio" name="q4" value="能，减少很多" required><span>能，害怕会减少很多</span></label>
+              <label class="option"><input type="radio" name="q4" value="能，减少一些"><span>能减少一些，但还是会紧张</span></label>
+              <label class="option"><input type="radio" name="q4" value="不能，仍然很害怕"><span>不能，想到见导师还是很害怕</span></label>
+              <label class="option"><input type="radio" name="q4" value="不确定"><span>不确定</span></label>
+            </div>
+            <textarea class="answer" name="q4_note" placeholder="什么样的师兄师姐支持对你最有帮助？（选填）"></textarea>
+          </fieldset>
+
+          <fieldset data-question>
+            <legend><span class="qnum">05</span>如果选了年轻导师，他确实从不批评你，但到了研二下学期，身边同学都发论文了，你连题目都还没定下来，每天担心毕不了业——那时候年轻导师的“温柔”，还能安慰到你吗？</legend>
+            <div class="options">
+              <label class="option"><input type="radio" name="q5" value="还能安慰我" required><span>还能安慰我，关系和情绪支持很重要</span></label>
+              <label class="option"><input type="radio" name="q5" value="很难安慰我"><span>很难安慰我，我会更需要明确的指导</span></label>
+              <label class="option"><input type="radio" name="q5" value="要看导师是否实际帮忙"><span>要看导师是否会实际帮我推进问题</span></label>
+              <label class="option"><input type="radio" name="q5" value="不确定"><span>不确定</span></label>
+            </div>
+            <textarea class="answer" name="q5_note" placeholder="你希望导师在这种时候具体做什么？（选填）"></textarea>
+          </fieldset>
+
+          <fieldset data-question>
+            <legend><span class="qnum">06</span>当你彻底卡壳、极其绝望的时候，你更希望听到哪句话？</legend>
+            <div class="options">
+              <label class="option"><input type="radio" name="q6" value="别试了，按我说的改，保你过" required><span>凶巴巴地说：“别试了，按我说的改，保你过。”</span></label>
+              <label class="option"><input type="radio" name="q6" value="我相信你，你再自己摸索一下"><span>温柔地说：“我相信你，你再自己摸索一下。”</span></label>
+              <label class="option"><input type="radio" name="q6" value="都不理想，我需要别的支持"><span>都不理想，我需要别的支持方式</span></label>
+            </div>
+            <textarea class="answer" name="q6_note" placeholder="你最需要听到或得到的具体帮助是什么？（选填）"></textarea>
+          </fieldset>
+        </div>
+      </section>
+
+      <section class="stage" aria-labelledby="stage-three-title">
+        <div class="stage-head"><div class="stage-num">03</div><div><h2 id="stage-three-title">终极二选一</h2><p>读研三年不可能十全十美，选你更能承受的委屈</p></div></div>
+        <div class="questions">
+          <fieldset data-question>
+            <legend><span class="qnum">07</span>如果必须在下面两种委屈里选一个，你选哪个？</legend>
+            <div class="final-choice">
+              <label class="option"><input type="radio" name="q7" value="老导师：偶尔受气、路线清晰、稳稳毕业" required><span><strong>选老导师</strong>偶尔开会挨两句批评、受点气，但路线清晰，按部就班就能稳稳拿学位证毕业。</span></label>
+              <label class="option"><input type="radio" name="q7" value="年轻导师：气氛轻松、但摸黑探路、可能延毕"><span><strong>选年轻导师</strong>平时气氛轻松、没人凶你，但全靠自己摸黑探路，随时面临写不出论文、甚至延毕的风险。</span></label>
+              <label class="option"><input type="radio" name="q7" value="都不能接受，需要继续了解"><span><strong>我暂时不选</strong>这两个描述都不能让我安心，我需要更多信息或第三种选择。</span></label>
+            </div>
+            <textarea class="answer" name="q7_note" placeholder="你做这个选择时，最看重的是什么？（选填）"></textarea>
+          </fieldset>
+        </div>
+      </section>
+
+      <div class="actions">
+        <button class="primary" type="submit" id="submit-button">提交问卷</button>
+        <button class="secondary" type="button" id="export-button">导出我的回答</button>
+        <button class="quiet" type="button" id="clear-button">清空答案</button>
+        <p class="privacy" id="privacy-note">接入 Apps Script 后，答案将写入问卷管理员的 Google 表格。页面不收集姓名或联系方式；补充回答请避免填写可识别个人身份的信息。</p>
+        <p class="status" id="status" role="status" aria-live="polite"></p>
+      </div>
+      <div class="honeypot" aria-hidden="true"><label>请勿填写<input id="website-check" name="website" tabindex="-1" autocomplete="off"></label></div>
+    </form>
+    <footer>请以真实感受作答。你的答案可以帮助你梳理优先级，但不能代替对导师指导方式、课题组支持和毕业要求的实际了解。</footer>
+  </main>
+
+  <script>
+    // 在 Apps Script Web App 部署后，将其 /exec 地址粘贴到此处。
+    const SUBMISSION_ENDPOINT = "";
+    const form = document.getElementById("reflection-form");
+    const fields = [...form.querySelectorAll("input, textarea")];
+    const statusNode = document.getElementById("status");
+    const storageKey = "advisor-reflection-questionnaire-v1";
+    const questions = [...form.querySelectorAll("[data-question]")];
+
+    function currentAnswers() {
+      const answers = {};
+      for (const field of fields) {
+        if (field.type === "radio") {
+          if (field.checked) answers[field.name] = field.value;
+        } else if (field.value.trim()) {
+          answers[field.name] = field.value.trim();
+        }
+      }
+      return answers;
+    }
+    function updateProgress() {
+      const complete = questions.filter((item) => item.querySelector('input[type="radio"]:checked')).length;
+      document.getElementById("progress-label").textContent = `已完成 ${complete} / ${questions.length}`;
+      document.getElementById("progress-fill").style.width = `${(complete / questions.length) * 100}%`;
+    }
+    function saveDraft() {
+      localStorage.setItem(storageKey, JSON.stringify(currentAnswers()));
+      updateProgress();
+    }
+    function setStatus(message, error = false) {
+      statusNode.textContent = message;
+      statusNode.classList.toggle("error", error);
+    }
+    function restoreDraft() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(storageKey) || "{}");
+        for (const field of fields) {
+          if (field.type === "radio") field.checked = saved[field.name] === field.value;
+          else if (saved[field.name]) field.value = saved[field.name];
+        }
+      } catch (_) { localStorage.removeItem(storageKey); }
+      updateProgress();
+    }
+    function downloadAnswers() {
+      const payload = {
+        title: "导师选择：看清自己的底线",
+        exportedAt: new Date().toISOString(),
+        answers: currentAnswers()
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json;charset=utf-8" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `导师选择问卷-${new Date().toISOString().slice(0, 10)}.json`;
+      link.click();
+      URL.revokeObjectURL(link.href);
+      setStatus("已导出回答文件。请妥善保管，其中可能包含个人感受。 ");
+    }
+
+    form.addEventListener("input", saveDraft);
+    form.addEventListener("change", saveDraft);
+    document.getElementById("export-button").addEventListener("click", downloadAnswers);
+    document.getElementById("clear-button").addEventListener("click", () => {
+      if (!confirm("确定清空本机保存的所有答案吗？")) return;
+      form.reset();
+      localStorage.removeItem(storageKey);
+      updateProgress();
+      setStatus("已清空本机草稿。");
+    });
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+      if (!SUBMISSION_ENDPOINT) {
+        setStatus("收集端还未配置。当前答案仅保存在这台设备，请先导出；管理员接入 Apps Script 后才能提交汇总。", true);
+        document.getElementById("privacy-note").scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+      const button = document.getElementById("submit-button");
+      button.disabled = true;
+      setStatus("正在提交…");
+      try {
+        // text/plain is a CORS-safelisted content type. no-cors lets the browser
+        // send the POST to Apps Script, whose response is intentionally opaque.
+        await fetch(SUBMISSION_ENDPOINT, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=UTF-8" },
+          body: JSON.stringify({ submittedAt: new Date().toISOString(), answers: currentAnswers(), website: document.getElementById("website-check").value })
+        });
+        setStatus("提交请求已发送。Google 接口不向跨站页面返回可读取的回执，答案仍保留在本机；请勿重复提交，管理员可在表格中核对是否入表。");
+      } catch (error) {
+        setStatus("提交失败，答案仍保存在本机。请稍后重试或导出备份。", true);
+      } finally {
+        button.disabled = false;
+      }
+    });
+    restoreDraft();
+  </script>
+</body>
+</html>
